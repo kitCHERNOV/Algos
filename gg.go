@@ -6,9 +6,9 @@ import (
 // Add handler for input data
 func HandlerInputData(data *int) {
 	if *data % 2 == 0{
-		fmt.Println("number is even")
+		fmt.Println("Number is even")
 	}else {
-		fmt.Println("number is odd")
+		fmt.Println("Number is odd")
 	}
 }
 
