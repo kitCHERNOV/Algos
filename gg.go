@@ -2,47 +2,44 @@ package main
 
 import (
 	"fmt"
-	"math/rand"
 )
 
-func quickSort(ar []int) {
-	if len(ar) < 2 {
-		return
-	}
-
-	left, right := 0, len(ar) - 1
-	pivotIndex := rand.Int() % len(ar)
-
-	ar[pivotIndex], ar[right] = ar[right], ar[pivotIndex]
-
-	for i := 0; i < len(ar); i++ {
-		if ar[i] < ar[right] {
-			ar[i], ar[left] = ar[left], ar[i]
-			left++
-		}
-	}
-
-	ar[left], ar[right] = ar[right], ar[left]
-
-	quickSort(ar[:left])
-	quickSort(ar[left + 1:])
-
-	return
-}
-
 // create func to join array1 and array2
-func merge(num1, nums2 []int) {
-	for k,i := range nums2 {
-		num1[k+3] = i
+func merge(nums1, nums2 []int, m,n int) {
+	pointer := m + n - 1 // Указатель на элемент финального массива
+	pointerNum1 := m - 1 // Указатель на элемент первого массива
+	pointerNum2 := n - 1 // Указатель на элемент второго массива
+
+	for ; pointer >= 0; {
+		if pointerNum2 < 0 {
+			break
+		}
+
+		if pointerNum1 >= 0 && nums1[pointerNum1] > nums2[pointerNum2] {
+			nums1[pointer] = nums1[pointerNum1]
+			pointerNum1--
+		}else {
+			nums1[pointer] = nums2[pointerNum2]
+			pointerNum2--
+		}
+		pointer--
 	}
-	quickSort(num1)
+}
+func countZero(n []int) int {
+	c := 0
+	for _,i := range n {
+		if i == 0 { c += 1}
+	}
+	return c
 }
 
 func main() {
 	// Arrays
 	nums1 := []int{1, 2, 3, 0, 0, 0}
 	nums2 := []int{2, 5, 6}
+
+	m,n := len(nums1) - countZero(nums1), len(nums2)
 	
-	merge(nums1, nums2)
+	merge(nums1, nums2, m, n)
 	fmt.Println(nums1)
 }
