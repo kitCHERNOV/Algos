@@ -23,14 +23,33 @@ func findMaxaverage(num []int, k int) ( maxAvg float64 ) {
 	maxAvg = -1000000
 	
 	
-	for i:=0; i < n - k; i++ {
-		if (Addition(num[i:i+k]) / float64(k) ) > float64(maxAvg) {
-
+	for i:=0; i < n - k; i++ { 
+		// Если элемент подмассива окажетя пустым, то каретку нужно будет сдвинуть на значение +n где n это смещение по head
+		if &num[i] == nil{
+			continue
+		}else if &num[i+1] == nil {
+			i++
+			continue
+		}else if &num[i+2] == nil {
+			i+=2
+			continue
+		}else if &num[i+3] == nil {
+			i+=3
+			continue
 		}
+		// s := Addition(num[i:i+k])
+		// fmt.Println(s, s/float64(k))
+		if s := Addition(num[i:i+k]); ( s / float64(k) ) > maxAvg {
+			maxAvg = s / float64(k)
+		}
+
 	} 
 	return
 }
 
 func main() {
-	fmt.Println("Average max num for slice of array is: ", findMaxaverage())
+	const length int = 10
+	var nums = [length]int{1,2,3,4,5}
+	var lforslice int = 4
+	fmt.Println("Average max num for slice of array is: ", findMaxaverage(nums[:], lforslice))
 }
